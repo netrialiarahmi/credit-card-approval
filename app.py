@@ -174,7 +174,7 @@ if submitted:
     reason = response.choices[0].message.content
 
 
-    st.write(f"Alasan: {reason}")
+    st.write(f" 📌 {reason}")
     
     credit = f"""
     Berdasarkan alasan : {reason}
@@ -192,7 +192,7 @@ if submitted:
 
     recommendation = response2.choices[0].message.content
 
-    st.write(f"Rekomendasi Kredit: {recommendation}")
+    st.write(f"📌 Rekomendasi Jenis Kredit: {recommendation}")
     csv_file = 'credit_predictions.csv'
     if os.path.exists(csv_file):
 
