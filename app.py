@@ -146,7 +146,7 @@ if submitted:
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "Provide detailed explanations based on credit card approval model predictions in Bahasa Indonesia."},
+            {"role": "system", "content": "You are a credit card banker. Provide detailed explanations based on credit card approval model predictions without conclusion or openning in Bahasa Indonesia."},
             {"role": "user", "content": reason_prompt}
         ]
     )
@@ -158,21 +158,21 @@ if submitted:
     
     credit = f"""
     Berdasarkan alasan : {reason}
-    Tentukan rekomendasi antara: 'Elite Credit Line', 'Flexible Growth', 'Basic Essentials', atau 'Tidak cocok untuk kredit'. Berikan alasan singkat dalam Bahasa Indonesia dan rekomendasi jenis promosi yang sesuai tambahkan emoticon.
+    Tentukan rekomendasi antara: 'Elite Credit Line', 'Flexible Growth', 'Basic Essentials', atau 'Tidak cocok untuk kredit'.
     """
 
 
     response2 = client.chat.completions.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "Provide detailed recommendations based on the credit card approval data in Bahasa Indonesia."},
+            {"role": "system", "content": "You are a credit card banker. Provide just a choice between 'Elite Credit Line', 'Flexible Growth', 'Basic Essentials', atau 'Tidak cocok untuk kredit' based on the credit card approval data and make it bold."},
             {"role": "user", "content": credit}
         ]
     )
 
     recommendation = response2.choices[0].message.content
 
-    st.write(f"{recommendation}")
+    st.write(f"Rekomendasi Kredit: {recommendation}")
     csv_file = 'credit_predictions.csv'
     if os.path.exists(csv_file):
 
