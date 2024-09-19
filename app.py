@@ -127,51 +127,50 @@ if submitted:
     df["Income_sgmt"] = df["Annual_income"].apply(lambda x: income_sgmt(x))
 
     st.subheader("🔧 Feature Engineering:")
-
     st.markdown(f"""
-    <div style="background-color: #D6EAF8; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f0f8ff; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Age</strong>: {df['Age'].iloc[0]} 🎂
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #D5F5E3; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Age Group</strong>: {df['Age_group'].iloc[0]} 👶👦👨👴
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #F9E79F; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f0f8ff; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Tenure</strong>: {df['Tenure'].iloc[0]} 📅
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #FADBD8; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Is Currently Employed</strong>: {'✔️ Yes' if df['Is_currently_employed'].iloc[0] == 1 else '❌ No'} 💼
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #FCF3CF; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f0f8ff; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Children to Family Ratio</strong>: {df['Children_to_family_ratio'].iloc[0]:.2f} 👨‍👩‍👧
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #D7BDE2; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Children Employment Impact</strong>: {df['Children_employment_impact'].iloc[0]:.2f} 👶➡️💼
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #AED6F1; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f0f8ff; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Income per Year Employed</strong>: {df['Income_per_year_employed'].iloc[0]:.2f} 💵/📅
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown(f"""
-    <div style="background-color: #A3E4D7; padding: 10px; border-radius: 5px;">
+    <div style="background-color: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #e0e0e0;">
     <strong>Income Segment</strong>: {df['Income_sgmt'].iloc[0]} 🏦
     </div>
     """, unsafe_allow_html=True)
