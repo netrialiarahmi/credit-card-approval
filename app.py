@@ -168,6 +168,21 @@ if submitted:
 
     # Tampilkan hasil prediksi dan alasan
     st.write(f"Alasan: {reason}")
+    credit = f"""
+    Berdasarkan alasan : {reason}
+    Tentukan rekomendasi antara: 'Elite Credit Line', 'Flexible Growth', 'Basic Essentials', atau 'Tidak cocok untuk kredit'. Berikan alasan singkat dalam Bahasa Indonesia dan rekomendasi jenis promosi yang sesuai tambahkan emoticon.
+    """
+
+    # Panggil OpenAI untuk mendapatkan rekomendasi
+    response2 = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "Provide detailed recommendations based on the credit card approval data in Bahasa Indonesia."},
+            {"role": "user", "content": credit}
+        ]
+    )
+
+    recommendation = response2.choices[0].message.content
 
     # Save the result to CSV file
     csv_file = 'credit_predictions.csv'
