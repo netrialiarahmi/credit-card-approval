@@ -107,6 +107,7 @@ if submitted:
         'Age': [Age],
         'Birthday_count': [Birthday_count],
         'Car_Owner': [Car_Owner],
+        'Children_employment_impact': [Children_employment_impact],
         'Propert_Owner': [Propert_Owner],
         'CHILDREN': [CHILDREN],
         'Annual_income': [Annual_income],
@@ -121,7 +122,6 @@ if submitted:
         'Is_currently_employed': [Is_currently_employed],
         'Children_to_family_ratio': [Children_to_family_ratio],
         'Tenure': [Tenure],
-        'Children_employment_impact': [Children_employment_impact],
         'Income_per_year_employed': [Income_per_year_employed],
         'Income_sgmt': [Income_sgmt]
     }
