@@ -155,14 +155,14 @@ if submitted:
     # Panggil OpenAI untuk memberikan alasan
     client = OpenAI(api_key=openai.api_key)
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "Provide detailed explanations based on credit card approval model predictions in Bahasa Indonesia."},
             {"role": "user", "content": reason_prompt}
         ]
     )
 
-    reason = response['choices'][0]['message']['content'].strip()
+    reason = response.choices[0].message.content
 
     # Tampilkan hasil prediksi dan alasan
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
