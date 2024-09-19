@@ -128,15 +128,54 @@ if submitted:
 
     st.subheader("🔧 Feature Engineering:")
 
-    st.markdown(f"<span style='color:blue;'>**Age**</span>: {df['Age'].iloc[0]} 🎂", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:green;'>**Age Group**</span>: {df['Age_group'].iloc[0]} 👶👦👨👴", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:purple;'>**Tenure**</span>: {df['Tenure'].iloc[0]} 📅", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:red;'>**Is Currently Employed**</span>: {'✔️ Yes' if df['Is_currently_employed'].iloc[0] == 1 else '❌ No'} 💼", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:orange;'>**Children to Family Ratio**</span>: {df['Children_to_family_ratio'].iloc[0]:.2f} 👨‍👩‍👧", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:brown;'>**Children Employment Impact**</span>: {df['Children_employment_impact'].iloc[0]:.2f} 👶➡️💼", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:teal;'>**Income per Year Employed**</span>: {df['Income_per_year_employed'].iloc[0]:.2f} 💵/📅", unsafe_allow_html=True)
-    st.markdown(f"<span style='color:navy;'>**Income Segment**</span>: {df['Income_sgmt'].iloc[0]} 🏦", unsafe_allow_html=True)
-
+    st.markdown(f"""
+    <div style="background-color: #D6EAF8; padding: 10px; border-radius: 5px;">
+    <strong>Age</strong>: {df['Age'].iloc[0]} 🎂
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #D5F5E3; padding: 10px; border-radius: 5px;">
+    <strong>Age Group</strong>: {df['Age_group'].iloc[0]} 👶👦👨👴
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #F9E79F; padding: 10px; border-radius: 5px;">
+    <strong>Tenure</strong>: {df['Tenure'].iloc[0]} 📅
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #FADBD8; padding: 10px; border-radius: 5px;">
+    <strong>Is Currently Employed</strong>: {'✔️ Yes' if df['Is_currently_employed'].iloc[0] == 1 else '❌ No'} 💼
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #FCF3CF; padding: 10px; border-radius: 5px;">
+    <strong>Children to Family Ratio</strong>: {df['Children_to_family_ratio'].iloc[0]:.2f} 👨‍👩‍👧
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #D7BDE2; padding: 10px; border-radius: 5px;">
+    <strong>Children Employment Impact</strong>: {df['Children_employment_impact'].iloc[0]:.2f} 👶➡️💼
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #AED6F1; padding: 10px; border-radius: 5px;">
+    <strong>Income per Year Employed</strong>: {df['Income_per_year_employed'].iloc[0]:.2f} 💵/📅
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown(f"""
+    <div style="background-color: #A3E4D7; padding: 10px; border-radius: 5px;">
+    <strong>Income Segment</strong>: {df['Income_sgmt'].iloc[0]} 🏦
+    </div>
+    """, unsafe_allow_html=True)
+    
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
         'Car_Owner': {'N': 0, 'Y': 1},
