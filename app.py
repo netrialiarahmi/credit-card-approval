@@ -174,7 +174,7 @@ if submitted:
     """
 
     # Panggil OpenAI untuk mendapatkan rekomendasi
-    response2 = openai.ChatCompletion.create(
+    response2 = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "Provide detailed recommendations based on the credit card approval data in Bahasa Indonesia."},
