@@ -104,29 +104,38 @@ if submitted:
 
     # Buat dataframe dari input form yang hanya berisi fitur yang dibutuhkan model
     data = {
-        'Age': [Age],
-        'Birthday_count': [Birthday_count],
+        'Ind_ID': [Ind_ID],
+        'GENDER': [GENDER],
         'Car_Owner': [Car_Owner],
-        'Children_employment_impact': [Children_employment_impact],
         'Propert_Owner': [Propert_Owner],
-        'EDUCATION': [EDUCATION],
         'CHILDREN': [CHILDREN],
         'Annual_income': [Annual_income],
         'Type_Income': [Type_Income],
-        'Ind_ID': [Ind_ID],
-        'GENDER': [GENDER],
+        'EDUCATION': [EDUCATION],
         'Marital_status': [Marital_status],
         'Family_Members': [Family_Members],
+        'Birthday_count': [Birthday_count],
         'Employed_days': [Employed_days],
+        'Age': [Age],
         'Age_group': [Age_group],
         'Is_currently_employed': [Is_currently_employed],
         'Children_to_family_ratio': [Children_to_family_ratio],
         'Tenure': [Tenure],
+        'Children_employment_impact': [Children_employment_impact],
         'Income_per_year_employed': [Income_per_year_employed],
         'Income_sgmt': [Income_sgmt]
     }
 
     df = pd.DataFrame(data)
+
+    # Pastikan urutan kolom sesuai dengan urutan yang diharapkan model
+    expected_features = ['GENDER', 'Car_Owner', 'Propert_Owner', 'CHILDREN', 'Annual_income', 
+                         'Type_Income', 'EDUCATION', 'Marital_status', 'Family_Members', 
+                         'Birthday_count', 'Employed_days', 'Age', 'Age_group', 
+                         'Is_currently_employed', 'Children_to_family_ratio', 'Tenure', 
+                         'Children_employment_impact', 'Income_per_year_employed', 'Income_sgmt']
+
+    df = df[expected_features]
 
     # Mapping kategori ke numerik untuk model prediksi
     mappings = {
@@ -144,15 +153,11 @@ if submitted:
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
-    # Buang kolom yang tidak dibutuhkan oleh model
-    df.drop(columns=['Ind_ID'], inplace=True)
-
     # Lakukan prediksi dengan CatBoost
     predictions = model.predict(df)
 
     df['Prediction'] = predictions
 
-    
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
 
     reason_prompt = f"""
