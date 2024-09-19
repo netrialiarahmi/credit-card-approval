@@ -8,3 +8,4 @@ matplotlib
 catboost
 openai
 plotly
+numpy
