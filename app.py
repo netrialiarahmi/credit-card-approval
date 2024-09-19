@@ -196,7 +196,7 @@ if submitted:
     Gender: {GENDER}, Car Owner: {Car_Owner}, Property Owner: {Propert_Owner},
     Number of Children: {CHILDREN}, Annual Income: {Annual_income}, 
     Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status},
-    Number of Family Members: {Family_Members}, Age Group: {Age_group_value}, Tenure: {Tenure_value:.2f}, Unemployment Duration: {Unemployment_duration},
+    Number of Family Members: {Family_Members}, Age Group: {Age}, Tenure: {Tenure_value:.2f}, Unemployment Duration: {Unemployment_duration},
     You are a credit card officer. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Write in English with emoticons, without a conclusion or introduction, just the reason.
     """
 
