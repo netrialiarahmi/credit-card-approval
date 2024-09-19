@@ -2,48 +2,53 @@ import openai
 import os
 import streamlit as st
 import pandas as pd
+import numpy as np
 import joblib
 from scipy.stats import skew, kurtosis
 from sklearn.preprocessing import PowerTransformer
 import miceforest as mf
 import matplotlib.pyplot as plt
 import plotly.express as px
-import numpy as np
 
+# Load model and preprocessing steps
 model_data = joblib.load('model.pkl')
 
-# Ambil komponen model
+# Extract model components
 model = model_data['model']
+power_transformer = model_data['power_transformer']
+log_cols = model_data['log_cols']
+norm_cols = model_data['norm_cols']
 
 # API Key OpenAI
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
-# Judul aplikasi
+# Title of the application
 st.title("✨ Credit Card Approval Classification ✨")
 
-# Deskripsi aplikasi
+# Description of the application
 st.write("""
 Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
 Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
 """)
 
-# Generate Ind_ID secara otomatis
+# Generate Ind_ID automatically
 csv_file = 'credit_predictions.csv'
 
 if os.path.exists(csv_file):
     previous_data = pd.read_csv(csv_file)
-    # Set Ind_ID sebagai nomor urut berikutnya
+    # Set Ind_ID as the next sequential number
     Ind_ID = len(previous_data) + 1
 else:
-    # Jika file belum ada, mulai dari 1
+    # If the file doesn't exist, start from 1
     Ind_ID = 1
 
-# Membuat form untuk input data
+# Create a form for data input
 with st.form("input_form"):
+    # Split the form into two columns
     col1, col2 = st.columns([1, 1])
 
-    # Kolom pertama
+    # First column
     with col1:
         st.text_input("Ind ID", value=Ind_ID, disabled=True)
         GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
@@ -51,18 +56,27 @@ with st.form("input_form"):
         Propert_Owner = st.selectbox("Property Owner", options=['Y', 'N'], index=0)
         CHILDREN = st.number_input("Number of Children", min_value=0, value=0)
         Annual_income = st.number_input("Annual Income", value=180000.0)
+        Type_Income = st.selectbox("Type of Income", options=['Commercial associate', 'State servant', 'Working', 'Pensioner'], index=3)
+        EDUCATION = st.selectbox("Education Level", options=['Higher education', 'Secondary / secondary special', 'Incomplete higher', 'Lower secondary'], index=0)
+        Marital_status = st.selectbox("Marital Status", options=['Married', 'Single', 'Separated/Widow'], index=0)
         Family_Members = st.number_input("Family Members", min_value=1, value=1)
-        Birthday_count = st.number_input("Birthday Count", value=-18772.0)
-        
-    # Kolom kedua
-    with col2:
-        Employed_days = st.number_input("Employed Days", value=365243)
-        Is_currently_employed = 1 if Employed_days < 0 else 0
-        st.text_input("Is Currently Employed", value='Y' if Is_currently_employed else 'N', disabled=True)
-        Age = np.floor(np.abs(Birthday_count) / 365)
-        Age_group = 'Senior Adult' if Age > 45 else ('Adult' if Age > 30 else 'Young Adult')
-        st.text_input("Age Group", value=Age_group, disabled=True)
+        Unemployment_duration = st.number_input("Unemployment Duration", min_value=0, value=0)
 
+    # Second column
+    with col2:
+        Housing_type = st.selectbox("Housing Type", options=['House / apartment', 'Co-op apartment', 'Municipal apartment', 'Office apartment', 'Rented apartment', 'With parents'], index=0)
+        Birthday_count = st.number_input("Birthday Count", value=-18772.0)
+        Employed_days = st.number_input("Employed Days", value=365243)
+        Mobile_phone = st.selectbox("Mobile Phone", options=['Y', 'N'], index=0)
+        Work_Phone = st.selectbox("Work Phone", options=['Y', 'N'], index=1)
+        Phone = st.selectbox("Phone", options=['Y', 'N'], index=1)
+        EMAIL_ID = st.selectbox("Email ID", options=['Y', 'N'], index=1)
+        Type_Occupation = st.selectbox("Type of Occupation", options=[
+            'Managers', 'High skill tech staff', 'IT staff', 'Accountants', 'HR staff',
+            'Core staff', 'Medicine staff', 'Sales staff', 'Realty agents', 'Secretaries',
+            'Private service staff', 'Security staff', 'Drivers', 'Cooking staff',
+            'Cleaning staff', 'Waiters/barmen staff', 'Laborers', 'Low-skill Laborers'
+        ], index=1)
     submitted = st.form_submit_button("Submit")
 
 if submitted:
@@ -73,15 +87,71 @@ if submitted:
         'Propert_Owner': [Propert_Owner],
         'CHILDREN': [CHILDREN],
         'Annual_income': [Annual_income],
-        'Family_Members': [Family_Members],
+        'Type_Income': [Type_Income],
+        'EDUCATION': [EDUCATION],
+        'Marital_status': [Marital_status],
+        'Housing_type': [Housing_type],
         'Birthday_count': [Birthday_count],
         'Employed_days': [Employed_days],
-        'Is_currently_employed': [Is_currently_employed],
-        'Age_group': [Age_group]
+        'Mobile_phone': [Mobile_phone],
+        'Work_Phone': [Work_Phone],
+        'Phone': [Phone],
+        'EMAIL_ID': [EMAIL_ID],
+        'Type_Occupation': [Type_Occupation],
+        'Family_Members': [Family_Members],
+        'Unemployment_duration': [Unemployment_duration]
     }
 
     df = pd.DataFrame(data)
 
+    # Calculate derived fields
+    df['Age'] = np.floor(np.abs(df['Birthday_count']) / 365)
+
+    def age_group(x):
+        if x > 45:
+            grup = 'Senior Adult'
+        elif x > 30:
+            grup = 'Adult'
+        else:
+            grup = 'Young Adult'
+        return grup
+
+    df['Age_group'] = df["Age"].apply(lambda x: age_group(x))
+
+    df['Tenure'] = np.where(df['Employed_days'] < 0, np.abs(df['Employed_days']) / 365, 0)
+    df['Is_currently_employed'] = np.where(df['Employed_days'] < 0, 1, 0)
+    df['Children_to_family_ratio'] = df['CHILDREN'] / df['Family_Members']
+    df['Children_employment_impact'] = df['CHILDREN'] * df['Tenure']
+    df['Income_per_year_employed'] = df['Annual_income'] / df['Tenure']
+    df['Income_per_year_employed'] = df['Income_per_year_employed'].replace([np.inf, -np.inf], np.nan).fillna(0)
+
+    # Define income segment thresholds
+    Q1 = 50000  # Lower threshold for Medium income
+    Q3 = 150000  # Lower threshold for High income
+
+    def income_sgmt(x):
+        if x >= Q3:
+            segment = "High"
+        elif x >= Q1:
+            segment = "Medium"
+        else:
+            segment = "Low"
+        return segment
+
+    df["Income_sgmt"] = df["Annual_income"].apply(lambda x: income_sgmt(x))
+
+    # Display derived fields to the user
+    st.subheader("Derived Fields:")
+    st.write(f"Age: {df['Age'].iloc[0]}")
+    st.write(f"Age Group: {df['Age_group'].iloc[0]}")
+    st.write(f"Tenure: {df['Tenure'].iloc[0]}")
+    st.write(f"Is Currently Employed: {'Yes' if df['Is_currently_employed'].iloc[0] == 1 else 'No'}")
+    st.write(f"Children to Family Ratio: {df['Children_to_family_ratio'].iloc[0]:.2f}")
+    st.write(f"Children Employment Impact: {df['Children_employment_impact'].iloc[0]:.2f}")
+    st.write(f"Income per Year Employed: {df['Income_per_year_employed'].iloc[0]:.2f}")
+    st.write(f"Income Segment: {df['Income_sgmt'].iloc[0]}")
+
+    # Mappings for categorical variables
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
         'Car_Owner': {'N': 0, 'Y': 1},
@@ -90,27 +160,32 @@ if submitted:
         'Work_Phone': {'N': 0, 'Y': 1},
         'Phone': {'N': 0, 'Y': 1},
         'EMAIL_ID': {'N': 0, 'Y': 1},
-        'Is_currently_employed': {'N': 0, 'Y': 1},
+        'Is_currently_employed': {0: 0, 1: 1},
         'Type_Income': {'Commercial associate': 4, 'State servant': 3, 'Working': 2, 'Pensioner': 1},
         'EDUCATION': {'Higher education': 4, 'Secondary / secondary special': 3, 'Incomplete higher': 2, 'Lower secondary': 1},
         'Marital_status': {'Married': 3, 'Separated/Widow': 2, 'Single': 1},
         'Housing_type': {'House / apartment': 6, 'Co-op apartment': 5, 'Municipal apartment': 4, 'Office apartment': 3, 'Rented apartment': 2, 'With parents': 1},
-        'Income_sgmt': {'H': 1, 'Medium': 0, 'Low': -1},
+        'Income_sgmt': {'High': 1, 'Medium': 0, 'Low': -1},
         'Age_group': {'Senior Adult': 1, 'Adult': 0, 'Young Adult': -1},
         'Type_Occupation': {
-            'Managers': 18, 'High skill tech staff': 17, 'IT staff': 16, 'Accountants': 15, 'HR staff': 14, 
+            'Managers': 18, 'High skill tech staff': 17, 'IT staff': 16, 'Accountants': 15, 'HR staff': 14,
             'Core staff': 13, 'Medicine staff': 12, 'Sales staff': 11, 'Realty agents': 10, 'Secretaries': 9,
-            'Private service staff': 8, 'Security staff': 7, 'Drivers': 6, 'Cooking staff': 5, 
+            'Private service staff': 8, 'Security staff': 7, 'Drivers': 6, 'Cooking staff': 5,
             'Cleaning staff': 4, 'Waiters/barmen staff': 3, 'Laborers': 2, 'Low-skill Laborers': 1
         }
     }
+
+    # Apply mappings to the dataframe
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
+    # Make predictions
     predictions = model.predict(df)
+
     df['Prediction'] = predictions
 
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
+
     
     reason_prompt = f"""
     Based on the following data:
