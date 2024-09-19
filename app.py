@@ -104,6 +104,7 @@ if submitted:
 
     # Buat dataframe dari input form yang hanya berisi fitur yang dibutuhkan model
     data = {
+        'Age': [Age],
         'Ind_ID': [Ind_ID],
         'GENDER': [GENDER],
         'Car_Owner': [Car_Owner],
@@ -116,7 +117,6 @@ if submitted:
         'Family_Members': [Family_Members],
         'Birthday_count': [Birthday_count],
         'Employed_days': [Employed_days],
-        'Age': [Age],
         'Age_group': [Age_group],
         'Is_currently_employed': [Is_currently_employed],
         'Children_to_family_ratio': [Children_to_family_ratio],
