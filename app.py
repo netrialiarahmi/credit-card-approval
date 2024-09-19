@@ -33,8 +33,6 @@ if os.path.exists(csv_file):
     Ind_ID = len(previous_data) + 1
 else:
     Ind_ID = 1
-with st.form("input_form"):
-    col1, col2 = st.columns([1, 1])
     
 with st.form("input_form"):
     # Form input dibagi ke dua kolom
