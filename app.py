@@ -42,9 +42,6 @@ else:
     # Jika file belum ada, mulai dari 1
     Ind_ID = 1
 
-# Tampilkan Ind_ID yang dihasilkan secara otomatis
-st.write(f"Ind_ID Otomatis: {Ind_ID}")
-
 # Membuat form untuk input data
 with st.form("input_form"):
     # Form input dibagi ke dua kolom
@@ -52,6 +49,7 @@ with st.form("input_form"):
     
     # Kolom pertama
     with col1:
+        st.text_input("Ind ID", value=Ind_ID, disabled=True)
         GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
         Car_Owner = st.selectbox("Car Owner", options=['Y', 'N'], index=0)
         Propert_Owner = st.selectbox("Property Owner", options=['Y', 'N'], index=0)
