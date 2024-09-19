@@ -1,4 +1,4 @@
-import openai
+from openai import OpenAI
 import os
 import streamlit as st
 import pandas as pd
@@ -153,7 +153,7 @@ if submitted:
     """
 
     # Panggil OpenAI untuk memberikan alasan
-    client = openai.OpenAI(api_key=openai.api_key)
+    client = OpenAI(api_key=openai.api_key)
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
