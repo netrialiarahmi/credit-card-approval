@@ -104,6 +104,7 @@ if submitted:
 
     # Buat dataframe dari input form yang hanya berisi fitur yang dibutuhkan model
     data = {
+        'Ind_ID': [Ind_ID]
         'GENDER': [GENDER],
         'Car_Owner': [Car_Owner],
         'Propert_Owner': [Propert_Owner],
