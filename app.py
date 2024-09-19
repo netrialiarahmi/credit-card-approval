@@ -167,7 +167,6 @@ if submitted:
     reason = response.choices[0].message.content
 
     # Tampilkan hasil prediksi dan alasan
-    st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
     st.write(f"Alasan: {reason}")
 
     # Save the result to CSV file
