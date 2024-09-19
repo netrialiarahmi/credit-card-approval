@@ -60,7 +60,7 @@ with st.form("input_form"):
         Mobile_phone = st.selectbox("Mobile Phone", options=['Y', 'N'], index=0)
         Work_Phone = st.selectbox("Work Phone", options=['Y', 'N'], index=1)
         Phone = st.selectbox("Phone", options=['Y', 'N'], index=1)
-        EMAIL_ID = st.text_input("Email ID", value="")
+        EMAIL_ID = st.selectbox("Email ID", options=['Y', 'N'], index=1)
         Type_Occupation = st.selectbox("Type of Occupation", options=[
             'Managers', 'High skill tech staff', 'IT staff', 'Accountants', 'HR staff', 
             'Core staff', 'Medicine staff', 'Sales staff', 'Realty agents', 'Secretaries',
@@ -118,6 +118,7 @@ if submitted:
         'Mobile_phone': {'N': 0, 'Y': 1},
         'Work_Phone': {'N': 0, 'Y': 1},
         'Phone': {'N': 0, 'Y': 1},
+        'EMAIL_ID': {'N': 0, 'Y': 1},
         'Is_currently_employed': {'N': 0, 'Y': 1},
         'Type_Income': {'Commercial associate': 4, 'State servant': 3, 'Working': 2, 'Pensioner': 1},
         'EDUCATION': {'Higher education': 4, 'Secondary / secondary special': 3, 'Incomplete higher': 2, 'Lower secondary': 1},
