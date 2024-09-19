@@ -10,45 +10,34 @@ import miceforest as mf
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-# Load model and preprocessing steps
 model_data = joblib.load('model.pkl')
 
-# Extract model components
 model = model_data['model']
 power_transformer = model_data['power_transformer']
 log_cols = model_data['log_cols']
 norm_cols = model_data['norm_cols']
 
-# API Key OpenAI
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
-# Title of the application
 st.title("✨ Credit Card Approval Classification ✨")
 
-# Description of the application
 st.write("""
 Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
 Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
 """)
 
-# Generate Ind_ID automatically
 csv_file = 'credit_predictions.csv'
 
 if os.path.exists(csv_file):
     previous_data = pd.read_csv(csv_file)
-    # Set Ind_ID as the next sequential number
     Ind_ID = len(previous_data) + 1
 else:
-    # If the file doesn't exist, start from 1
     Ind_ID = 1
 
-# Create a form for data input
 with st.form("input_form"):
-    # Split the form into two columns
     col1, col2 = st.columns([1, 1])
 
-    # First column
     with col1:
         st.text_input("Ind ID", value=Ind_ID, disabled=True)
         GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
@@ -62,7 +51,6 @@ with st.form("input_form"):
         Family_Members = st.number_input("Family Members", min_value=1, value=1)
         Unemployment_duration = st.number_input("Unemployment Duration", min_value=0, value=0)
 
-    # Second column
     with col2:
         Housing_type = st.selectbox("Housing Type", options=['House / apartment', 'Co-op apartment', 'Municipal apartment', 'Office apartment', 'Rented apartment', 'With parents'], index=0)
         Birthday_count = st.number_input("Birthday Count", value=-18772.0)
@@ -104,7 +92,6 @@ if submitted:
 
     df = pd.DataFrame(data)
 
-    # Calculate derived fields
     df['Age'] = np.floor(np.abs(df['Birthday_count']) / 365)
 
     def age_group(x):
@@ -125,7 +112,6 @@ if submitted:
     df['Income_per_year_employed'] = df['Annual_income'] / df['Tenure']
     df['Income_per_year_employed'] = df['Income_per_year_employed'].replace([np.inf, -np.inf], np.nan).fillna(0)
 
-    # Define income segment thresholds
     Q1 = 50000  # Lower threshold for Medium income
     Q3 = 150000  # Lower threshold for High income
 
@@ -140,7 +126,6 @@ if submitted:
 
     df["Income_sgmt"] = df["Annual_income"].apply(lambda x: income_sgmt(x))
 
-    # Display derived fields to the user
     st.subheader("Feature Engineering:")
     st.write(f"Age: {df['Age'].iloc[0]}")
     st.write(f"Age Group: {df['Age_group'].iloc[0]}")
@@ -151,7 +136,6 @@ if submitted:
     st.write(f"Income per Year Employed: {df['Income_per_year_employed'].iloc[0]:.2f}")
     st.write(f"Income Segment: {df['Income_sgmt'].iloc[0]}")
 
-    # Mappings for categorical variables
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
         'Car_Owner': {'N': 0, 'Y': 1},
@@ -175,11 +159,9 @@ if submitted:
         }
     }
 
-    # Apply mappings to the dataframe
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
-    # Make predictions
     predictions = model.predict(df)
 
     df['Prediction'] = predictions
