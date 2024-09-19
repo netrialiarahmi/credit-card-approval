@@ -141,7 +141,7 @@ if submitted:
     df["Income_sgmt"] = df["Annual_income"].apply(lambda x: income_sgmt(x))
 
     # Display derived fields to the user
-    st.subheader("Derived Fields:")
+    st.subheader("Feature Engineering:")
     st.write(f"Age: {df['Age'].iloc[0]}")
     st.write(f"Age Group: {df['Age_group'].iloc[0]}")
     st.write(f"Tenure: {df['Tenure'].iloc[0]}")
@@ -197,7 +197,7 @@ if submitted:
     Number of Children: {CHILDREN}, Annual Income: {Annual_income}, 
     Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status},
     Number of Family Members: {Family_Members}, Age Group: {Age}, Tenure: {Tenure_value:.2f}, Unemployment Duration: {Unemployment_duration},
-    You are a credit card officer. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Write in English with emoticons, without a conclusion or introduction, just the reason.
+    You are a credit card officer. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Write in Bahasa Indonesia with emoticons, without a conclusion or introduction, just the reason.
     """
 
 
