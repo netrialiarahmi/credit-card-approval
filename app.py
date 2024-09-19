@@ -25,12 +25,6 @@ openai.api_key = openai_api_key
 # Judul aplikasi
 st.title("✨ Credit Card Approval Classification ✨")
 
-# Deskripsi aplikasi
-st.write("""
-Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
-Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
-""")
-
 # Generate Ind_ID secara otomatis
 csv_file = 'credit_predictions.csv'
 
@@ -108,19 +102,8 @@ if submitted:
             return 'Low'
     Income_sgmt = income_sgmt(Annual_income)
 
-    # Tampilkan hasil perhitungan otomatis
-    st.text_input("Age", value=Age, disabled=True)
-    st.text_input("Age Group", value=Age_group, disabled=True)
-    st.text_input("Is Currently Employed", value=Is_currently_employed, disabled=True)
-    st.text_input("Children to Family Ratio", value=Children_to_family_ratio, disabled=True)
-    st.text_input("Tenure (years)", value=Tenure, disabled=True)
-    st.text_input("Children Employment Impact", value=Children_employment_impact, disabled=True)
-    st.text_input("Income per Year Employed", value=Income_per_year_employed, disabled=True)
-    st.text_input("Income Segment", value=Income_sgmt, disabled=True)
-
-    # Buat dataframe dari input form
+    # Buat dataframe dari input form yang hanya berisi fitur yang dibutuhkan model
     data = {
-        'Ind_ID': [Ind_ID],
         'GENDER': [GENDER],
         'Car_Owner': [Car_Owner],
         'Propert_Owner': [Propert_Owner],
@@ -160,10 +143,14 @@ if submitted:
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
+    # Buang kolom yang tidak dibutuhkan oleh model
+    df.drop(columns=['Ind_ID'], inplace=True)
+
+    # Lakukan prediksi dengan CatBoost
     predictions = model.predict(df)
 
     df['Prediction'] = predictions
-    
+
     
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
 
