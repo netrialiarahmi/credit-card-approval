@@ -21,6 +21,7 @@ openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
 st.title("✨ Credit Card Approval Classification ✨")
+st.image("credit card.png", caption="Credit Card", use_column_width=True)
 
 st.write("""
 Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
