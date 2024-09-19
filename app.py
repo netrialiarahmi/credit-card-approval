@@ -236,10 +236,11 @@ if submitted:
     
     reason_prompt = f"""
     Based on the following data:
+    Tenure: {Tenure_value:.2f}, Employed Days: {Employed_days}, Type of Income: {Type_Income},
+    Type Occupation: {Type_Occupation},Annual Income: {Annual_income}, 
     Gender: {GENDER}, Car Owner: {Car_Owner}, Property Owner: {Propert_Owner},
-    Number of Children: {CHILDREN}, Annual Income: {Annual_income}, Type Occupation: {Type_Occupation},
-    Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status},
-    Number of Family Members: {Family_Members}, Age Group: {Age}, Tenure: {Tenure_value:.2f}, Unemployment Duration: {Unemployment_duration},
+    Number of Children: {CHILDREN}, Education Level: {EDUCATION}, Marital Status: {Marital_status},
+    Number of Family Members: {Family_Members}, Age Group: {Age}, Unemployment Duration: {Unemployment_duration},
     You are a credit card officer. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Write in Bahasa Indonesia with emoticons, without a conclusion or introduction, just the reason.
     """
 
