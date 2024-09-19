@@ -185,15 +185,19 @@ if submitted:
     df['Prediction'] = predictions
 
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
-
+    Age = df['Age'].iloc[0]
+    Tenure_value = df['Tenure'].iloc[0]
+    Is_currently_employed_value = 'Y' if df['Is_currently_employed'].iloc[0] == 1 else 'N'
+    Children_to_family_ratio_value = df['Children_to_family_ratio'].iloc[0]
+    Income_sgmt_value = df['Income_sgmt'].iloc[0]
     
     reason_prompt = f"""
     Based on the following data:
-    Gender: {GENDER}, Car Owner: {Car_Owner}, Property Owner: {Propert_Owner}, 
+    Gender: {GENDER}, Car Owner: {Car_Owner}, Property Owner: {Propert_Owner},
     Number of Children: {CHILDREN}, Annual Income: {Annual_income}, 
-    Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status}, 
-    Family Members: {Family_Members}, Age: {Age_group}, Tenure: {Tenure}, Unemployment Duration: {Unemployment_duration},
-    You are a credit card banker. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Please write in Bahasa Indonesia with Emoticon without conclusion or openning in Bahasa Indonesia, Just the reason.
+    Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status},
+    Number of Family Members: {Family_Members}, Age Group: {Age_group_value}, Tenure: {Tenure_value:.2f}, Unemployment Duration: {Unemployment_duration},
+    You are a credit card officer. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Write in English with emoticons, without a conclusion or introduction, just the reason.
     """
 
 
