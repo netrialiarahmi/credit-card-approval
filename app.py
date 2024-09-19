@@ -45,18 +45,29 @@ else:
 # Membuat form untuk input data
 st.text_input("Ind ID", value=Ind_ID, disabled=True)
 
-# Input kolom yang diberikan pengguna
-GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
-Car_Owner = st.selectbox("Car Owner", options=['Y', 'N'], index=0)
-Propert_Owner = st.selectbox("Property Owner", options=['Y', 'N'], index=0)
-CHILDREN = st.number_input("Number of Children", min_value=0, value=0)
-Annual_income = st.number_input("Annual Income", value=180000.0)
-Type_Income = st.selectbox("Type of Income", options=['Commercial associate', 'State servant', 'Working', 'Pensioner'], index=3)
-EDUCATION = st.selectbox("Education Level", options=['Higher education', 'Secondary / secondary special', 'Incomplete higher', 'Lower secondary'], index=0)
-Marital_status = st.selectbox("Marital Status", options=['Married', 'Single', 'Separated/Widow'], index=0)
-Family_Members = st.number_input("Family Members", min_value=1, value=1)
-Birthday_count = st.number_input("Birthday Count", value=-18772.0)
-Employed_days = st.number_input("Employed Days", value=365243)
+with st.form("input_form"):
+    col1, col2 = st.columns([1, 1])
+    
+    # Kolom pertama
+    with col1:
+        GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
+        Car_Owner = st.selectbox("Car Owner", options=['Y', 'N'], index=0)
+        Propert_Owner = st.selectbox("Property Owner", options=['Y', 'N'], index=0)
+        CHILDREN = st.number_input("Number of Children", min_value=0, value=0)
+        Annual_income = st.number_input("Annual Income", value=180000.0)
+        Type_Income = st.selectbox("Type of Income", options=['Commercial associate', 'State servant', 'Working', 'Pensioner'], index=3)
+
+    # Kolom kedua
+    with col2:
+        EDUCATION = st.selectbox("Education Level", options=['Higher education', 'Secondary / secondary special', 'Incomplete higher', 'Lower secondary'], index=0)
+        Marital_status = st.selectbox("Marital Status", options=['Married', 'Single', 'Separated/Widow'], index=0)
+        Family_Members = st.number_input("Family Members", min_value=1, value=1)
+        Birthday_count = st.number_input("Birthday Count", value=-18772.0)
+        Employed_days = st.number_input("Employed Days", value=365243)
+
+    # Tombol submit
+    submitted = st.form_submit_button("Submit")
+
 
 # Menghitung otomatis berdasarkan input pengguna
 Age = np.floor(np.abs(Birthday_count) / 365)
