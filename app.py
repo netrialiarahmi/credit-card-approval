@@ -33,14 +33,20 @@ st.markdown(
 
 st.markdown(
     """
-    <div style="background-color: #f0f8ff; padding: 20px; border-radius: 10px; border: 2px solid #d0d7de; text-align: center;">
-        <h3>🚀 Welcome to the Credit Card Approval Predictor!</h3>
-        <p>Our smart model analyzes the data you provide and predicts whether a credit card application will be <strong>approved</strong> ✅ or <strong>rejected</strong> ❌.</p>
-        <p>Just enter the applicant's details, and discover the prediction along with the reasons behind the decision. Enjoy a fast, accurate, and transparent experience!</p>
+    <div style="background-color: #e6f7ff; padding: 20px; border-radius: 15px; border: 1px solid #cce7ff; margin-bottom: 20px;">
+        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #0073e6;">🚀 Welcome to the Credit Card Approval Predictor!</h3>
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #333;">
+            Our intelligent model analyzes the data you provide to predict whether a credit card application will be <strong style="color: green;">approved</strong> ✅ or <strong style="color: red;">rejected</strong> ❌.
+        </p>
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #333;">
+            Simply input the applicant’s details to get the prediction along with the reasons behind the decision. 
+            Enjoy a quick, accurate, and transparent credit card application process!
+        </p>
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 
 csv_file = 'credit_predictions.csv'
