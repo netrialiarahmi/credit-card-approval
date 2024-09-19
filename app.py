@@ -126,15 +126,16 @@ if submitted:
 
     df["Income_sgmt"] = df["Annual_income"].apply(lambda x: income_sgmt(x))
 
-    st.subheader("Feature Engineering:")
-    st.write(f"Age: {df['Age'].iloc[0]}")
-    st.write(f"Age Group: {df['Age_group'].iloc[0]}")
-    st.write(f"Tenure: {df['Tenure'].iloc[0]}")
-    st.write(f"Is Currently Employed: {'Yes' if df['Is_currently_employed'].iloc[0] == 1 else 'No'}")
-    st.write(f"Children to Family Ratio: {df['Children_to_family_ratio'].iloc[0]:.2f}")
-    st.write(f"Children Employment Impact: {df['Children_employment_impact'].iloc[0]:.2f}")
-    st.write(f"Income per Year Employed: {df['Income_per_year_employed'].iloc[0]:.2f}")
-    st.write(f"Income Segment: {df['Income_sgmt'].iloc[0]}")
+    st.subheader("🔧 Feature Engineering:")
+
+    st.markdown(f"<span style='color:blue;'>**Age**</span>: {df['Age'].iloc[0]} 🎂", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:green;'>**Age Group**</span>: {df['Age_group'].iloc[0]} 👶👦👨👴", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:purple;'>**Tenure**</span>: {df['Tenure'].iloc[0]} 📅", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:red;'>**Is Currently Employed**</span>: {'✔️ Yes' if df['Is_currently_employed'].iloc[0] == 1 else '❌ No'} 💼", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:orange;'>**Children to Family Ratio**</span>: {df['Children_to_family_ratio'].iloc[0]:.2f} 👨‍👩‍👧", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:brown;'>**Children Employment Impact**</span>: {df['Children_employment_impact'].iloc[0]:.2f} 👶➡️💼", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:teal;'>**Income per Year Employed**</span>: {df['Income_per_year_employed'].iloc[0]:.2f} 💵/📅", unsafe_allow_html=True)
+    st.markdown(f"<span style='color:navy;'>**Income Segment**</span>: {df['Income_sgmt'].iloc[0]} 🏦", unsafe_allow_html=True)
 
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
