@@ -7,3 +7,4 @@ miceforest
 matplotlib
 catboost
 openai
+plotly
