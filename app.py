@@ -19,17 +19,16 @@ norm_cols = model_data['norm_cols']
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
-
 st.markdown(
     """
-    <div style="background-color: #f9f3e6; padding: 20px; border-radius: 15px; border: 1px solid #f0e5d1; margin-bottom: 20px;">
-        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #6d4c41;">🚀 Welcome to the Credit Card Approval Predictor!</h3>
-        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4e342e;">
+    <div style="background-color: #f9f3e6; padding: 25px; border-radius: 12px; border: 1px solid #e0e0e0; margin-bottom: 20px;">
+        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #4a4a4a;">🚀 Welcome to the Credit Card Approval Predictor!</h3>
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4a4a4a; margin-top: 10px;">
             Our intelligent model analyzes the data you provide to predict whether a credit card application will be 
-            <strong style="color: #81c784;">approved</strong> ✅ or 
-            <strong style="color: #e57373;">rejected</strong> ❌.
+            <strong style="color: #66bb6a;">approved</strong> ✅ or 
+            <strong style="color: #ef5350;">rejected</strong> ❌.
         </p>
-        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4e342e;">
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4a4a4a; margin-top: 5px;">
             Simply input the applicant’s details to get the prediction along with the reasons behind the decision. 
             Enjoy a fast, accurate, and transparent credit card application process!
         </p>
