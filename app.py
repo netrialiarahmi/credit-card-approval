@@ -36,7 +36,7 @@ else:
     Ind_ID = 1
 
 with st.form("input_form"):
-    col1, col2,col3 = st.columns([1, 1,1])
+    col1, col2,col3 = st.columns([1, 1, 1])
 
     with col1:
         st.text_input("Ind ID", value=Ind_ID, disabled=True)
@@ -46,8 +46,6 @@ with st.form("input_form"):
         CHILDREN = st.number_input("Number of Children", min_value=0, value=0)
         Annual_income = st.number_input("Annual Income", value=180000.0)
         Type_Income = st.selectbox("Type of Income", options=['Commercial associate', 'State servant', 'Working', 'Pensioner'], index=3)
-
-
     with col2:
         EDUCATION = st.selectbox("Education Level", options=['Higher education', 'Secondary / secondary special', 'Incomplete higher', 'Lower secondary'], index=0)
         Marital_status = st.selectbox("Marital Status", options=['Married', 'Single', 'Separated/Widow'], index=0)
