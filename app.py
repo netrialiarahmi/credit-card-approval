@@ -184,7 +184,7 @@ if submitted:
 
     df['Prediction'] = predictions
 
-    st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
+   st.subheader(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
     Age = df['Age'].iloc[0]
     Tenure_value = df['Tenure'].iloc[0]
     Is_currently_employed_value = 'Y' if df['Is_currently_employed'].iloc[0] == 1 else 'N'
@@ -213,7 +213,7 @@ if submitted:
     reason = response.choices[0].message.content
 
 
-    st.write(f"Alasan: {reason}")
+    st.subheader(f"{reason}")
     
     credit = f"""
     Berdasarkan alasan : {reason}
@@ -231,7 +231,7 @@ if submitted:
 
     recommendation = response2.choices[0].message.content
 
-    st.write(f"Rekomendasi Kredit: {recommendation}")
+    st.subheader(f"Rekomendasi Kredit: {recommendation}")
     csv_file = 'credit_predictions.csv'
     if os.path.exists(csv_file):
 
