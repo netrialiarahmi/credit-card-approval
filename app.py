@@ -138,7 +138,7 @@ if submitted:
     Number of Children: {CHILDREN}, Annual Income: {Annual_income}, 
     Type of Income: {Type_Income}, Education Level: {EDUCATION}, Marital Status: {Marital_status}, 
     Family Members: {Family_Members}, Age: {Age}, Tenure: {Tenure}, Unemployment Duration: {Unemployment_duration},
-    Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Please write in Bahasa Indonesia with Emoticon.
+    You are a credit card banker. Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Please write in Bahasa Indonesia with Emoticon without conclusion or openning in Bahasa Indonesia, Just the reason.
     """
 
 
