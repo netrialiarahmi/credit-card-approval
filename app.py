@@ -184,7 +184,7 @@ if submitted:
 
     df['Prediction'] = predictions
 
-   st.subheader(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
+    st.subheader(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
     Age = df['Age'].iloc[0]
     Tenure_value = df['Tenure'].iloc[0]
     Is_currently_employed_value = 'Y' if df['Is_currently_employed'].iloc[0] == 1 else 'N'
