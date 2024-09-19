@@ -9,28 +9,49 @@ import miceforest as mf
 import matplotlib.pyplot as plt
 import plotly.express as px
 
+# Load model and preprocessing steps
 model_data = joblib.load('model.pkl')
 
+# Ambil komponen model
 model = model_data['model']
 power_transformer = model_data['power_transformer']
 log_cols = model_data['log_cols']
 norm_cols = model_data['norm_cols']
 
+# API Key OpenAI
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
+# Judul aplikasi
 st.title("✨ Credit Card Approval Classification ✨")
 
+# Deskripsi aplikasi
 st.write("""
 Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
 Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
 """)
 
+# Generate Ind_ID secara otomatis
+csv_file = 'credit_predictions.csv'
+
+if os.path.exists(csv_file):
+    previous_data = pd.read_csv(csv_file)
+    # Set Ind_ID sebagai nomor urut berikutnya
+    Ind_ID = len(previous_data) + 1
+else:
+    # Jika file belum ada, mulai dari 1
+    Ind_ID = 1
+
+# Tampilkan Ind_ID yang dihasilkan secara otomatis
+st.write(f"Ind_ID Otomatis: {Ind_ID}")
+
+# Membuat form untuk input data
 with st.form("input_form"):
+    # Form input dibagi ke dua kolom
     col1, col2 = st.columns([1, 1])
     
+    # Kolom pertama
     with col1:
-        Ind_ID = st.text_input("Ind ID", value="5008827")
         GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
         Car_Owner = st.selectbox("Car Owner", options=['Y', 'N'], index=0)
         Propert_Owner = st.selectbox("Property Owner", options=['Y', 'N'], index=0)
@@ -44,6 +65,7 @@ with st.form("input_form"):
         Tenure = st.number_input("Tenure (years)", min_value=0.0, value=0.0)
         Unemployment_duration = st.number_input("Unemployment Duration", min_value=0, value=0)
         
+    # Kolom kedua
     with col2:
         Housing_type = st.selectbox("Housing Type", options=['House / apartment', 'Co-op apartment', 'Municipal apartment', 'Office apartment', 'Rented apartment', 'With parents'], index=0)
         Birthday_count = st.number_input("Birthday Count", value=-18772.0)
