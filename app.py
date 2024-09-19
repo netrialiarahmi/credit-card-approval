@@ -85,9 +85,25 @@ if submitted:
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
         'Car_Owner': {'N': 0, 'Y': 1},
-        'Propert_Owner': {'N': 0, 'Y': 1}
+        'Propert_Owner': {'N': 0, 'Y': 1},
+        'Mobile_phone': {'N': 0, 'Y': 1},
+        'Work_Phone': {'N': 0, 'Y': 1},
+        'Phone': {'N': 0, 'Y': 1},
+        'EMAIL_ID': {'N': 0, 'Y': 1},
+        'Is_currently_employed': {'N': 0, 'Y': 1},
+        'Type_Income': {'Commercial associate': 4, 'State servant': 3, 'Working': 2, 'Pensioner': 1},
+        'EDUCATION': {'Higher education': 4, 'Secondary / secondary special': 3, 'Incomplete higher': 2, 'Lower secondary': 1},
+        'Marital_status': {'Married': 3, 'Separated/Widow': 2, 'Single': 1},
+        'Housing_type': {'House / apartment': 6, 'Co-op apartment': 5, 'Municipal apartment': 4, 'Office apartment': 3, 'Rented apartment': 2, 'With parents': 1},
+        'Income_sgmt': {'H': 1, 'Medium': 0, 'Low': -1},
+        'Age_group': {'Senior Adult': 1, 'Adult': 0, 'Young Adult': -1},
+        'Type_Occupation': {
+            'Managers': 18, 'High skill tech staff': 17, 'IT staff': 16, 'Accountants': 15, 'HR staff': 14, 
+            'Core staff': 13, 'Medicine staff': 12, 'Sales staff': 11, 'Realty agents': 10, 'Secretaries': 9,
+            'Private service staff': 8, 'Security staff': 7, 'Drivers': 6, 'Cooking staff': 5, 
+            'Cleaning staff': 4, 'Waiters/barmen staff': 3, 'Laborers': 2, 'Low-skill Laborers': 1
+        }
     }
-
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
