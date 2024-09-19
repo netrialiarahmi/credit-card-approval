@@ -153,10 +153,11 @@ if submitted:
     """
 
     # Panggil OpenAI untuk memberikan alasan
-    response = openai.chat.completion.create(
+    client = openai.OpenAI(api_key=openai.api_key)
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Provide detailed explanations based on credit card approval model predictions."},
+            {"role": "system", "content": "Provide detailed explanations based on credit card approval model predictions in Bahasa Indonesia."},
             {"role": "user", "content": reason_prompt}
         ]
     )
