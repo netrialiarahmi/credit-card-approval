@@ -99,7 +99,15 @@ if submitted:
         'EMAIL_ID': [EMAIL_ID],
         'Type_Occupation': [Type_Occupation],
         'Family_Members': [Family_Members],
-        'Unemployment_duration': [Unemployment_duration]
+        'Age': [Age],
+        'Tenure': [Tenure],
+        'Unemployment_duration': [Unemployment_duration],
+        'Is_currently_employed': [Is_currently_employed],
+        'Children_to_family_ratio': [Children_to_family_ratio],
+        'Children_employment_impact': [Children_employment_impact],
+        'Income_per_year_employed': [Income_per_year_employed],
+        'Income_sgmt': [Income_sgmt],
+        'Age_group': [Age_group]
     }
 
     df = pd.DataFrame(data)
