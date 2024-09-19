@@ -9,34 +9,26 @@ import miceforest as mf
 import matplotlib.pyplot as plt
 import plotly.express as px
 
-# Load model and preprocessing steps
 model_data = joblib.load('model.pkl')
 
-# Ambil komponen model
 model = model_data['model']
 power_transformer = model_data['power_transformer']
 log_cols = model_data['log_cols']
 norm_cols = model_data['norm_cols']
 
-# API Key OpenAI
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
-# Judul aplikasi
 st.title("✨ Credit Card Approval Classification ✨")
 
-# Deskripsi aplikasi
 st.write("""
 Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
 Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
 """)
 
-# Membuat form untuk input data
 with st.form("input_form"):
-    # Form input dibagi ke dua kolom
     col1, col2 = st.columns([1, 1])
     
-    # Kolom pertama
     with col1:
         Ind_ID = st.text_input("Ind ID", value="5008827")
         GENDER = st.selectbox("Gender", options=['M', 'F'], index=0)
@@ -52,7 +44,6 @@ with st.form("input_form"):
         Tenure = st.number_input("Tenure (years)", min_value=0.0, value=0.0)
         Unemployment_duration = st.number_input("Unemployment Duration", min_value=0, value=0)
         
-    # Kolom kedua
     with col2:
         Housing_type = st.selectbox("Housing Type", options=['House / apartment', 'Co-op apartment', 'Municipal apartment', 'Office apartment', 'Rented apartment', 'With parents'], index=0)
         Birthday_count = st.number_input("Birthday Count", value=-18772.0)
@@ -77,7 +68,6 @@ with st.form("input_form"):
     submitted = st.form_submit_button("Submit")
 
 if submitted:
-    # Buat dataframe dari input form
     data = {
         'Ind_ID': [Ind_ID],
         'GENDER': [GENDER],
@@ -110,7 +100,6 @@ if submitted:
 
     df = pd.DataFrame(data)
 
-    # Mapping kategori ke numerik
     mappings = {
         'GENDER': {'M': 0, 'F': 1},
         'Car_Owner': {'N': 0, 'Y': 1},
@@ -137,14 +126,12 @@ if submitted:
     for col, mapping in mappings.items():
         df[col] = df[col].map(mapping)
 
-    # Prediksi menggunakan model
     predictions = model.predict(df)
 
-    # Tampilkan hasil prediksi
     df['Prediction'] = predictions
     
     st.write(f"Hasil prediksi untuk ID {Ind_ID}: {'**Approved**' if predictions[0] == 1 else '**Rejected**'}")
-    # Menghasilkan alasan menggunakan OpenAI
+
     reason_prompt = f"""
     Based on the following data:
     Gender: {GENDER}, Car Owner: {Car_Owner}, Property Owner: {Propert_Owner}, 
@@ -154,7 +141,7 @@ if submitted:
     Please provide a detailed reason why the credit card application was {'approved' if predictions[0] == 1 else 'rejected'}. Please write in Bahasa Indonesia with Emoticon.
     """
 
-    # Panggil OpenAI untuk memberikan alasan
+
     client = openai.OpenAI(api_key=openai.api_key)
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -166,14 +153,14 @@ if submitted:
 
     reason = response.choices[0].message.content
 
-    # Tampilkan hasil prediksi dan alasan
+
     st.write(f"Alasan: {reason}")
     credit = f"""
     Berdasarkan alasan : {reason}
     Tentukan rekomendasi antara: 'Elite Credit Line', 'Flexible Growth', 'Basic Essentials', atau 'Tidak cocok untuk kredit'. Berikan alasan singkat dalam Bahasa Indonesia dan rekomendasi jenis promosi yang sesuai tambahkan emoticon.
     """
 
-    # Panggil OpenAI untuk mendapatkan rekomendasi
+
     response2 = client.chat.completions.create(
         model="gpt-4",
         messages=[
@@ -184,21 +171,21 @@ if submitted:
 
     recommendation = response2.choices[0].message.content
 
-    # Save the result to CSV file
+
     csv_file = 'credit_predictions.csv'
     if os.path.exists(csv_file):
-        # Append to existing CSV
+
         df.to_csv(csv_file, mode='a', header=False, index=False)
     else:
-        # Create a new CSV
+
         df.to_csv(csv_file, mode='w', header=True, index=False)
 
-    # Tampilkan data dari CSV
+
     st.write("Data hasil prediksi sebelumnya:")
     previous_data = pd.read_csv(csv_file)
     st.dataframe(previous_data)
 
-    # Tambahkan fitur download CSV
+
     st.download_button(
         label="Download data sebagai CSV",
         data=previous_data.to_csv(index=False),
@@ -206,30 +193,30 @@ if submitted:
         mime='text/csv'
     )
 
-    # Visualisasi hasil prediksi menggunakan pie chart dengan Plotly
+
     counts = previous_data['Prediction'].value_counts()
     labels = ['Approved', 'Rejected']
     sizes = [counts.get(1, 0), counts.get(0, 0)]
 
-    # Menggunakan Plotly untuk membuat pie chart interaktif
+
     fig = px.pie(
         names=labels,
         values=sizes,
         title='Distribusi Hasil Prediksi (Approved vs Rejected)',
-        hole=0.4  # Membuat donat chart
+        hole=0.4
     )
 
-    # Menambahkan elemen interaktif dan desain yang lebih menarik
+
     fig.update_traces(
         hoverinfo='label+percent',
         textinfo='value',
         marker=dict(colors=['#81c784', '#e57373'], line=dict(color='#FFFFFF', width=2))
     )
 
-    # Tampilkan pie chart interaktif di Streamlit
+ 
     st.plotly_chart(fig)
 
-    # Tampilkan jumlah data yang rejected dan approved
+
     approved_count = counts.get(1, 0)
     rejected_count = counts.get(0, 0)
 
