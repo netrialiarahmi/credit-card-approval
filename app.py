@@ -31,10 +31,17 @@ st.markdown(
 )
 
 
-st.write("""
-Aplikasi ini menggunakan model yang sudah dilatih untuk memprediksi apakah seseorang akan disetujui atau ditolak dalam pengajuan kartu kredit berdasarkan data input yang disediakan.
-Masukkan data calon pemohon untuk mendapatkan prediksi beserta alasan prediksi.
-""")
+st.markdown(
+    """
+    <div style="background-color: #f0f8ff; padding: 20px; border-radius: 10px; border: 2px solid #d0d7de; text-align: center;">
+        <h3>🚀 Welcome to the Credit Card Approval Predictor!</h3>
+        <p>Our smart model analyzes the data you provide and predicts whether a credit card application will be <strong>approved</strong> ✅ or <strong>rejected</strong> ❌.</p>
+        <p>Just enter the applicant's details, and discover the prediction along with the reasons behind the decision. Enjoy a fast, accurate, and transparent experience!</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 csv_file = 'credit_predictions.csv'
 
