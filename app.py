@@ -24,7 +24,7 @@ st.title("✨ Credit Card Approval Classification ✨")
 st.markdown(
     """
     <div style="text-align: center; padding: 20px;">
-        <img src="https://raw.githubusercontent.com/netrialiarahmi/credit-card-approval/main/credit%20card.png" alt="Credit Card" style="width: 80%; border-radius: 10px;">
+        <img src="https://raw.githubusercontent.com/netrialiarahmi/credit-card-approval/main/credit%20card.png" alt="Credit Card" style="width: 100%; border-radius: 10px;">
     </div>
     """,
     unsafe_allow_html=True
