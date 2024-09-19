@@ -20,28 +20,28 @@ norm_cols = model_data['norm_cols']
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 openai.api_key = openai_api_key
 
-st.title("✨ Credit Card Approval Classification ✨")
 st.markdown(
     """
-    <div style="text-align: center; padding: 20px;">
-        <img src="https://raw.githubusercontent.com/netrialiarahmi/credit-card-approval/main/credit%20card.png" alt="Credit Card" style="width: 100%; border-radius: 10px;">
+    <div style="background-color: #f9f3e6; padding: 20px; border-radius: 15px; border: 1px solid #f0e5d1; margin-bottom: 20px;">
+        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #6d4c41;">🚀 Welcome to the Credit Card Approval Predictor!</h3>
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4e342e;">
+            Our intelligent model analyzes the data you provide to predict whether a credit card application will be 
+            <strong style="color: #81c784;">approved</strong> ✅ or 
+            <strong style="color: #e57373;">rejected</strong> ❌.
+        </p>
+        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #4e342e;">
+            Simply input the applicant’s details to get the prediction along with the reasons behind the decision. 
+            Enjoy a fast, accurate, and transparent credit card application process!
+        </p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-
 st.markdown(
     """
-    <div style="background-color: #e6f7ff; padding: 20px; border-radius: 15px; border: 1px solid #cce7ff; margin-bottom: 20px;">
-        <h3 style="text-align: center; font-family: Arial, sans-serif; color: #0073e6;">🚀 Welcome to the Credit Card Approval Predictor!</h3>
-        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-            Our intelligent model analyzes the data you provide to predict whether a credit card application will be <strong style="color: green;">approved</strong> ✅ or <strong style="color: red;">rejected</strong> ❌.
-        </p>
-        <p style="text-align: center; font-family: Arial, sans-serif; font-size: 16px; color: #333;">
-            Simply input the applicant’s details to get the prediction along with the reasons behind the decision. 
-            Enjoy a quick, accurate, and transparent credit card application process!
-        </p>
+    <div style="text-align: center; padding: 20px;">
+        <img src="https://raw.githubusercontent.com/netrialiarahmi/credit-card-approval/main/credit%20card.png" alt="Credit Card" style="width: 100%; border-radius: 10px;">
     </div>
     """,
     unsafe_allow_html=True
