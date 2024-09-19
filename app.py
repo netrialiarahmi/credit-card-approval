@@ -8,6 +8,7 @@ from sklearn.preprocessing import PowerTransformer
 import miceforest as mf
 import matplotlib.pyplot as plt
 import plotly.express as px
+import numpy as np
 
 model_data = joblib.load('model.pkl')
 
