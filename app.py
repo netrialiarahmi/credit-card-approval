@@ -56,14 +56,22 @@ with st.form("input_form"):
         CHILDREN = st.number_input("Number of Children", min_value=0, value=0)
         Annual_income = st.number_input("Annual Income", value=180000.0)
         Type_Income = st.selectbox("Type of Income", options=['Commercial associate', 'State servant', 'Working', 'Pensioner'], index=3)
-
-    # Kolom kedua
-    with col2:
         EDUCATION = st.selectbox("Education Level", options=['Higher education', 'Secondary / secondary special', 'Incomplete higher', 'Lower secondary'], index=0)
         Marital_status = st.selectbox("Marital Status", options=['Married', 'Single', 'Separated/Widow'], index=0)
         Family_Members = st.number_input("Family Members", min_value=1, value=1)
         Birthday_count = st.number_input("Birthday Count", value=-18772.0)
+
+    # Kolom kedua
+    with col2:
         Employed_days = st.number_input("Employed Days", value=365243)
+        st.text_input("Age", value=Age, disabled=True)
+        st.text_input("Age Group", value=Age_group, disabled=True)
+        st.text_input("Is Currently Employed", value=Is_currently_employed, disabled=True)
+        st.text_input("Children to Family Ratio", value=Children_to_family_ratio, disabled=True)
+        st.text_input("Tenure (years)", value=Tenure, disabled=True)
+        st.text_input("Children Employment Impact", value=Children_employment_impact, disabled=True)
+        st.text_input("Income per Year Employed", value=Income_per_year_employed, disabled=True)
+        st.text_input("Income Segment", value=Income_sgmt, disabled=True)
 
     # Tombol submit
     submitted = st.form_submit_button("Submit")
@@ -98,8 +106,8 @@ Children_employment_impact = CHILDREN * Tenure
 Income_per_year_employed = Annual_income / Tenure if Tenure > 0 else 0
 
 # Menghitung Income Segment
-Q1 = 50000  # Placeholder untuk quantile income, bisa diganti dengan nilai yang sesuai
-Q3 = 150000  # Placeholder untuk quantile income, bisa diganti dengan nilai yang sesuai
+Q1 = df["Annual_income"].quantile(.25)
+Q3 = df["Annual_income"].quantile(.75)
 
 def income_sgmt(x):
     if x >= Q3:
@@ -110,15 +118,7 @@ def income_sgmt(x):
         return 'Low'
 Income_sgmt = income_sgmt(Annual_income)
 
-# Menampilkan hasil perhitungan otomatis di form (tetapi tidak dapat diedit oleh pengguna)
-st.text_input("Age", value=Age, disabled=True)
-st.text_input("Age Group", value=Age_group, disabled=True)
-st.text_input("Is Currently Employed", value=Is_currently_employed, disabled=True)
-st.text_input("Children to Family Ratio", value=Children_to_family_ratio, disabled=True)
-st.text_input("Tenure (years)", value=Tenure, disabled=True)
-st.text_input("Children Employment Impact", value=Children_employment_impact, disabled=True)
-st.text_input("Income per Year Employed", value=Income_per_year_employed, disabled=True)
-st.text_input("Income Segment", value=Income_sgmt, disabled=True)
+
 
 # Tombol submit
 if st.button("Submit"):
