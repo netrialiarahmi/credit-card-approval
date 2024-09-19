@@ -5,10 +5,9 @@ import pandas as pd
 import joblib
 from scipy.stats import skew, kurtosis
 from sklearn.preprocessing import PowerTransformer
-import miceforest as mf
+import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
-import numpy as np
 
 # Load model and preprocessing steps
 model_data = joblib.load('model.pkl')
@@ -157,7 +156,7 @@ if st.button("Submit"):
         'EDUCATION': {'Higher education': 4, 'Secondary / secondary special': 3, 'Incomplete higher': 2, 'Lower secondary': 1},
         'Marital_status': {'Married': 3, 'Separated/Widow': 2, 'Single': 1},
         'Housing_type': {'House / apartment': 6, 'Co-op apartment': 5, 'Municipal apartment': 4, 'Office apartment': 3, 'Rented apartment': 2, 'With parents': 1},
-        'Income_sgmt': {'H': 1, 'Medium': 0, 'Low': -1},
+        'Income_sgmt': {'High': 1, 'Medium': 0, 'Low': -1},
         'Age_group': {'Senior Adult': 1, 'Adult': 0, 'Young Adult': -1},
         'Type_Occupation': {
             'Managers': 18, 'High skill tech staff': 17, 'IT staff': 16, 'Accountants': 15, 'HR staff': 14, 
@@ -166,10 +165,6 @@ if st.button("Submit"):
             'Cleaning staff': 4, 'Waiters/barmen staff': 3, 'Laborers': 2, 'Low-skill Laborers': 1
         }
     }
-
-    for col, mapping in mappings.items():
-        df[col] = df[col].map(mapping)
-
 
     # Menghitung otomatis berdasarkan logika yang diminta
     df['Age'] = np.floor(np.abs(df['Birthday_count']) / 365)
@@ -212,6 +207,9 @@ if st.button("Submit"):
         else:
             return 'Low'
     df["Income_sgmt"] = df["Annual_income"].apply(income_sgmt)
+        # Convert kategori ke numerik
+    for col, mapping in mappings.items():
+        df[col] = df[col].map(mapping)
 
     predictions = model.predict(df)
 
